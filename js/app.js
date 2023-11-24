@@ -6,22 +6,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputAsunto = document.querySelector('#asunto');
     const inputMensaje = document.querySelector('#mensaje');
 
-    inputEmail.addEventListener('blur', function(evt) {
-        console.log(evt.target.value);
-    });
+    inputEmail.addEventListener('blur', validar);
+    inputConfirmarEmail.addEventListener('blur', validar);
+    inputAsunto.addEventListener('blur', validar);
+    inputMensaje.addEventListener('blur', validar);
 
-    inputConfirmarEmail.addEventListener('blur', function(evt) {
-        console.log(evt.target.value);
-    });
+  function validar(evt) {
+    console.log(evt.target.value);
 
-    inputAsunto.addEventListener('blur', function(evt) {
-        console.log(evt.target.value);
-    });
+  }
 
-    inputMensaje.addEventListener('blur', function(evt) {
-        console.log(evt.target.value);
-    });
-
-    
 
 });
