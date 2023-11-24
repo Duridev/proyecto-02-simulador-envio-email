@@ -12,18 +12,26 @@ document.addEventListener('DOMContentLoaded', function() {
     inputAsunto.addEventListener('blur', validar);
     inputMensaje.addEventListener('blur', validar);
 
-  function validar(evt) {
-    if(evt.target.value.trim() === "") {
-      mostrarAlerta(`El campo ${evt.target.id} es obligatorio`, evt.target.parentElement);
+  function validar(e) {
+    if(e.target.value.trim() === "") {
+      mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
       return;
     }
-    /*if(evt.target.id === 'email' && !validarEmail(
-      evt.target.value)) {
-        mostrarAlerta('El email no es valido', evt.target.parent
+    /*if(e.target.id === 'email' && !validarEmail(
+      e.target.value)) {
+        mostrarAlerta('El email no es valido', e.target.parent
         Element);
         return;
         }*/
-    limpiarAlerta(evt.target.parentElement);
+
+    if(e.target.id === 'email' && !validarEmail(e.target.value)) {
+      mostrarAlerta('El email no es valido', e.target.parentElement)
+      return;
+    }
+
+
+
+    limpiarAlerta(e.target.parentElement);
   }
 
   function mostrarAlerta(mensaje, referencia) {
@@ -45,7 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if(alerta) {
       alerta.remove();
       }
+  }
 
+  function validarEmail(email) {
+    const regex =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    const resultado = regex.test(email);
+    return resultado;
   }
 
 });
