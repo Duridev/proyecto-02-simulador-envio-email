@@ -17,12 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
       mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
       return;
     }
-    /*if(e.target.id === 'email' && !validarEmail(
-      e.target.value)) {
-        mostrarAlerta('El email no es valido', e.target.parent
-        Element);
-        return;
-        }*/
+
+    
+    if (e.target.id === 'confirmarEmail' && inputConfirmarEmail.value !== inputEmail.value) {
+      mostrarAlerta('Los campos de email no coinciden', e.target.parentElement);
+      return;
+    }
+  
+      
 
     if(e.target.id === 'email' && !validarEmail(e.target.value)) {
       mostrarAlerta('El email no es valido', e.target.parentElement)
