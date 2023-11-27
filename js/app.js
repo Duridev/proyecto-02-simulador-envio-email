@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const email = {
     email: '',
+    confirmacion: '',
     asunto: '',
     mensaje: ''
   }
@@ -13,34 +14,57 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputMensaje = document.querySelector('#mensaje');
     const formulario = document.querySelector('#formulario');
     const btnSubmit = document.querySelector('#formulario button[type="submit"]');
+    const btnReset = document.querySelector('#formulario button[type="reset"]');
 
-    inputEmail.addEventListener('blur', validar);
+
+    //Asignar Eventos
+    inputEmail.addEventListener('input', validar);
     inputConfirmarEmail.addEventListener('blur', validar);
-    inputAsunto.addEventListener('blur', validar);
-    inputMensaje.addEventListener('blur', validar);
+    inputAsunto.addEventListener('input', validar);
+    inputMensaje.addEventListener('input', validar);
+
+    btnReset.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // Reiniciar el objeto
+      email.email = '';
+      email.confirmacion = '';
+      email.asunto = '';
+      email.mensaje = '';
+
+      formulario.reset();
+      comprobarEmail();
+    })
 
   function validar(e) {
     if(e.target.value.trim() === "") {
       mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
+      email[e.target.name] = "";
       comprobarEmail();
       return;
     }
 
     if (e.target.id === 'confirmarEmail' && inputConfirmarEmail.value !== inputEmail.value) {
       mostrarAlerta('Los campos de email no coinciden', e.target.parentElement);
+      email[e.target.name] = "";
       comprobarEmail();
       return;
     }
 
     if(e.target.id === 'email' && !validarEmail(e.target.value)) {
       mostrarAlerta('El email no es valido', e.target.parentElement)
+      email[e.target.name] = "";
+      comprobarEmail();     
       return;
     }
 
     limpiarAlerta(e.target.parentElement);
 
     // Asignar Valores
-    email[e.target.name] = e.tarhet.value.trim().toLowerCase();
+    email[e.target.name] = e.target.value.trim().toLowerCase();
+
+    // Comprobar e; objeto de email
+    comprobarEmail();
 
   }
 
@@ -73,11 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function comprobarEmail() {
     if(Object.values(email).includes('')) {
-
-    } else {
-      btnSubmit.classList.remove('opacity-50');
-      btnSubmit.disabled = false;
+      btnSubmit.classList.add('opacity-50');
+      btnSubmit.disabled = true;
+      return
     }
+      btnSubmit.classList.remove('opacity-50');
+      btnSubmit.disabled = fainput
   }
 
 });
