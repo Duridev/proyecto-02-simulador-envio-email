@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnSubmit = document.querySelector('#formulario button[type="submit"]');
     const btnReset = document.querySelector('#formulario button[type="reset"]');
     const spinner = document.querySelector('#spinner');
-
+    
 
     //Asignar Eventos
     inputEmail.addEventListener('input', validar);
@@ -43,6 +43,18 @@ document.addEventListener('DOMContentLoaded', function() {
         spinner.classList.add('hidden');
 
         resetFormulario();
+
+        // Crear una alerta
+        const alertaExito = document.createElement('P');
+        alertaExito.classList.add('bg-green-500', 'text-white', 'p-2', 'text-center', 'rounded-lg', 'mt-10', 'font-bold', 'text-sm', 'uppercase');
+        alertaExito.textContent = '¡Tu correo electrónico ha sido enviado exitósamente!';
+
+        formulario.appendChild(alertaExito)
+
+        setTimeout(()=>{
+          alertaExito.remove()
+        },3000);
+
       }, 3000);
 
 
