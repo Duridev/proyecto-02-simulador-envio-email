@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //confirmacion: '',
     asunto: '',
     mensaje: ''
-  }
+  };
 
     // Seleccionar los elem,entos de la intertfaz
     const inputEmail = document.querySelector('#email');
@@ -28,16 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     btnReset.addEventListener('click', function(e) {
       e.preventDefault();
+      resetFormulario();
 
-      // Reiniciar el objeto
-      email.email = '';
-      //email.confirmacion = '';
-      email.asunto = '';
-      email.mensaje = '';
-
-      formulario.reset();
-      comprobarEmail();
-    })
+    });
 
     function enviarEmail(e) {
       e.preventDefault();
@@ -45,7 +38,15 @@ document.addEventListener('DOMContentLoaded', function() {
       spinner.classList.add('flex');
       spinner.classList.remove('hidden');
 
-    }
+      setTimeout(() => {
+        spinner.classList.remove('flex');
+        spinner.classList.add('hidden');
+
+        resetFormulario();
+      }, 3000);
+
+
+    };
 
     function validar(e) {
       if(e.target.value.trim() === "") {
@@ -53,21 +54,21 @@ document.addEventListener('DOMContentLoaded', function() {
         email[e.target.name] = "";
         comprobarEmail();
         return;
-      }
+      };
 
     if (e.target.id === 'confirmarEmail' && inputConfirmarEmail.value !== inputEmail.value) {
       mostrarAlerta('Los campos de email no coinciden', e.target.parentElement);
       email[e.target.name] = "";
       comprobarEmail();
       return;
-    }
+    };
 
     if(e.target.id === 'email' && !validarEmail(e.target.value)) {
       mostrarAlerta('El email no es valido', e.target.parentElement)
       email[e.target.name] = "";
       comprobarEmail();     
       return;
-    }
+    };
 
     limpiarAlerta(e.target.parentElement);
 
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Comprobar e; objeto de email
     comprobarEmail();
 
-  }
+  };
 
   function mostrarAlerta(mensaje, referencia) {
     // Comprueba si ya existe la alerta
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inyectar el error al formulario
     referencia.appendChild(error);
-  }
+  };
 
   // Limpiar mensaje de alerta
   function limpiarAlerta(referencia) {
@@ -98,13 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if(alerta) {
       alerta.remove();
       }
-  }
+  };
 
   function validarEmail(email) {
     const regex =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
     const resultado = regex.test(email);
     return resultado;
-  }
+  };
 
   function comprobarEmail() {
     if(Object.values(email).includes('')) {
@@ -114,6 +115,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       btnSubmit.classList.remove('opacity-50');
       btnSubmit.disabled = false;
-  }
+  };
+
+
+  function resetFormulario() {
+    // Reiniciar el objeto
+    email.email = '';
+    //email.confirmacion = '';
+    email.asunto = '';
+    email.mensaje = '';
+
+    formulario.reset();
+    comprobarEmail();
+  };
 
 });
