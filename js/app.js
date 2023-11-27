@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const email = {
     email: '',
-    confirmacion: '',
+    //confirmacion: '',
     asunto: '',
     mensaje: ''
   }
@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const formulario = document.querySelector('#formulario');
     const btnSubmit = document.querySelector('#formulario button[type="submit"]');
     const btnReset = document.querySelector('#formulario button[type="reset"]');
+    const spinner = document.querySelector('#spinner');
 
 
     //Asignar Eventos
@@ -23,12 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
     inputAsunto.addEventListener('input', validar);
     inputMensaje.addEventListener('input', validar);
 
+    formulario.addEventListener('submit', enviarEmail);
+
     btnReset.addEventListener('click', function(e) {
       e.preventDefault();
 
       // Reiniciar el objeto
       email.email = '';
-      email.confirmacion = '';
+      //email.confirmacion = '';
       email.asunto = '';
       email.mensaje = '';
 
@@ -36,13 +39,21 @@ document.addEventListener('DOMContentLoaded', function() {
       comprobarEmail();
     })
 
-  function validar(e) {
-    if(e.target.value.trim() === "") {
-      mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
-      email[e.target.name] = "";
-      comprobarEmail();
-      return;
+    function enviarEmail(e) {
+      e.preventDefault();
+
+      spinner.classList.add('flex');
+      spinner.classList.remove('hidden');
+
     }
+
+    function validar(e) {
+      if(e.target.value.trim() === "") {
+        mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
+        email[e.target.name] = "";
+        comprobarEmail();
+        return;
+      }
 
     if (e.target.id === 'confirmarEmail' && inputConfirmarEmail.value !== inputEmail.value) {
       mostrarAlerta('Los campos de email no coinciden', e.target.parentElement);
@@ -102,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return
     }
       btnSubmit.classList.remove('opacity-50');
-      btnSubmit.disabled = fainput
+      btnSubmit.disabled = false;
   }
 
 });
